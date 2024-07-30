@@ -7,7 +7,7 @@ server {
   listen [::]:443 quic;
   listen [::]:443 ssl;
   http2 on;
-  http3 off;
+  http3 on;
   {{ssl_certificate_key}}
   {{ssl_certificate}}
   {{server_name}}
@@ -27,7 +27,15 @@ server {
 
   {{settings}}
 
-  location ~/\.git {
+  location ~ /\. {
+    deny all;
+  }
+
+  location = /xmlrpc.php {
+    deny all;
+  }
+
+  location ~* /(?:uploads|files)/.*.php$ {
     deny all;
   }
 

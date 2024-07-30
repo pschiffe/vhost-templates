@@ -6,7 +6,7 @@ server {
   listen [::]:443 quic;
   listen [::]:443 ssl;
   http2 on;
-  http3 off;
+  http3 on;
   {{ssl_certificate_key}}
   {{ssl_certificate}}
   {{server_name}}
@@ -53,6 +53,10 @@ server {
     auth_basic off;
     allow all;
     try_files $uri @reverse_proxy;
+  }
+
+  location ~ /\. {
+    deny all;
   }
 
   location / {
